@@ -1,0 +1,7 @@
+
+config USER_APPS_GST_TEST
+	bool "Gstreamer example, test code"
+	default n
+	select FS_APPS_GSTREAMER
+	help
+	    Basic Gstreamer C application.

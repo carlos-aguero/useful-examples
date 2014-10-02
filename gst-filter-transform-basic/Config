@@ -1,0 +1,6 @@
+config FS_APPS_GSTREAMER_BUFFER_PARTITIONER
+        bool "Gstreamer buffer partitioner"
+        select FS_APPS_GSTREAMER
+        select FS_APPS_GSTREAMER_PLUGINS_BASE
+        help
+            Enables the gstreamer filter element for partitioning one buffer with top containing odd lines and bottom containing even lines, created buffers should be passed to the deinterlace element.

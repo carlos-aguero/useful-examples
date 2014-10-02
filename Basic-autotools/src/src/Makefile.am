@@ -1,0 +1,9 @@
+
+ACLOCAL_AMFLAGS = -I m4
+
+bin_PROGRAMS = rtspsettimeout
+
+rtspsettimeout_SOURCES = rtsp-set-timeout.c
+
+rtspsettimeout_CFLAGS = @GOBJECT_CFLAGS@ @GLIB_CFLAGS@ @GIO_CFLAGS@ @GSTREAMER_CFLAGS@ @GST_RTSP_SERVER_CFLAGS@
+rtspsettimeout_LDADD = @GOBJECT_LIBS@ @GLIB_LIBS@ @GIO_LIBS@ @GSTREAMER_LIBS@ @GST_RTSP_SERVER_LIBS@
