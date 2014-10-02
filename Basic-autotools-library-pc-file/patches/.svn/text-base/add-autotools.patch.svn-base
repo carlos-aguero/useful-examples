@@ -1,0 +1,93 @@
+Index: pugixml-1.4/src/autogen.sh
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ pugixml-1.4/src/autogen.sh	2014-10-02 12:00:04.785601198 -0600
+@@ -0,0 +1,9 @@
++#!/bin/sh
++# you can either set the environment variables AUTOCONF, AUTOHEADER, AUTOMAKE,
++# ACLOCAL, AUTOPOINT and/or LIBTOOLIZE to the right versions, or leave them
++# unset and get the defaults
++
++autoreconf --verbose --force --install --make || {
++ echo 'autogen.sh failed';
++ exit 1;
++}
+Index: pugixml-1.4/src/Makefile.am
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ pugixml-1.4/src/Makefile.am	2014-10-02 12:02:54.521601178 -0600
+@@ -0,0 +1,6 @@
++SUBDIRS = src
++
++pkgconfigdir=/usr/lib/pkgconfig/
++pkgconfig_DATA = libpugixml.pc
++
++
+Index: pugixml-1.4/src/configure.ac
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ pugixml-1.4/src/configure.ac	2014-10-02 12:02:26.857601182 -0600
+@@ -0,0 +1,35 @@
++AC_INIT([lib_pugixmle],[1.4],[support@ridgerun.com])
++AM_INIT_AUTOMAKE([-Wall -Werror foreign])
++AC_CONFIG_MACRO_DIR([m4])
++m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
++
++LT_INIT
++AC_ENABLE_SHARED
++AC_DISABLE_STATIC
++AC_PROG_CXX
++AC_PROG_LIBTOOL
++AC_CONFIG_HEADERS([config.h])
++AC_CONFIG_FILES([Makefile src/Makefile libpugixml.pc:libpugixml.pc.in])
++
++# Additional arguments (and substitutions)
++# Allow the pkg-config directory to be set
++#AC_ARG_WITH(pkgconfigdir,
++#        AC_HELP_STRING([--with-pkgconfigdir],
++#        [Use the specified pkgconfig dir (default is libdir/pkgconfig)]),
++#        [pkgconfigdir=${withval}],
++#        [pkgconfigdir='${libdir}/pkgconfig'])
++
++
++dnl Check for pkgconfig first
++AC_CHECK_PROG(HAVE_PKGCONFIG, pkg-config, yes, no)
++
++dnl Give error and exit if we don't have pkgconfig
++if test "x$HAVE_PKGCONFIG" = "xno"; then
++  AC_MSG_ERROR(you need to have pkgconfig installed !)
++fi
++
++AC_OUTPUT
++
++
++
++
+Index: pugixml-1.4/src/src/Makefile.am
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ pugixml-1.4/src/src/Makefile.am	2014-10-02 12:00:04.785601198 -0600
+@@ -0,0 +1,7 @@
++
++ACLOCAL_AMFLAGS = -I m4
++
++lib_LTLIBRARIES = libpugixml.la
++libpugixml_la_SOURCES = pugiconfig.hpp pugixml.cpp pugixml.hpp
++libpugixml_la_LDFLAGS = -release 1.4.0
++
+Index: pugixml-1.4/src/libpugixml.pc.in
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ pugixml-1.4/src/libpugixml.pc.in	2014-10-02 12:00:04.785601198 -0600
+@@ -0,0 +1,11 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++includedir=@includedir@
++modules=@WITH_MODULES@
++
++Name: libpuxixml
++Version: @VERSION@
++Description: libpugixml library.
++Requires:
++Libs: -L${libdir} -lpugxml
