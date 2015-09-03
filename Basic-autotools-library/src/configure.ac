@@ -1,4 +1,4 @@
-AC_INIT([gst_remote],[1.0],[support@ridgerun.com])
+AC_INIT([gst_remote],[1.0.1],[support@ridgerun.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_CONFIG_MACRO_DIR([m4])
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
@@ -9,7 +9,7 @@ AC_DISABLE_STATIC
 AC_PROG_CC
 AC_PROG_LIBTOOL
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([Makefile src/Makefile test.pc])
+AC_CONFIG_FILES([Makefile src/Makefile libtest.pc])
 
 AM_PROG_VALAC([0.7.7])
 
